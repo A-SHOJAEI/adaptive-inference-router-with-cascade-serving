@@ -1,0 +1,145 @@
+# Default configuration for Adaptive Inference Router with Cascade Serving
+
+model:
+  router:
+    hidden_dim: 256
+    num_layers: 3
+    dropout: 0.1
+    use_attention: true
+    attention_heads: 8
+
+  cascade:
+    variants:
+      - name: "quantized_int8"
+        latency_multiplier: 0.3
+        accuracy_multiplier: 0.95
+        memory_multiplier: 0.25
+      - name: "pruned_50"
+        latency_multiplier: 0.5
+        accuracy_multiplier: 0.97
+        memory_multiplier: 0.5
+      - name: "distilled"
+        latency_multiplier: 0.4
+        accuracy_multiplier: 0.94
+        memory_multiplier: 0.3
+      - name: "full_precision"
+        latency_multiplier: 1.0
+        accuracy_multiplier: 1.0
+        memory_multiplier: 1.0
+
+training:
+  epochs: 50
+  patience: 10
+  min_delta: 0.0001
+  gradient_accumulation_steps: 4
+  mixed_precision: true
+
+  rl:
+    learning_rate: 0.0003
+    clip_epsilon: 0.2
+    entropy_coeff: 0.01
+    value_loss_coeff: 0.5
+    max_grad_norm: 0.5
+    gamma: 0.99
+    lambda_gae: 0.95
+
+  objectives:
+    latency_weight: 0.4
+    accuracy_weight: 0.3
+    throughput_weight: 0.2
+    sla_weight: 0.1
+
+  optimizer:
+    weight_decay: 0.0001
+
+  scheduler:
+    min_lr: 0.000001
+
+data:
+  dataset: "mlperf_inference"
+  batch_size: 32
+  num_workers: 4
+  pin_memory: true
+
+  difficulty_features:
+    - "input_complexity"
+    - "computational_graph_depth"
+    - "memory_footprint"
+    - "numerical_stability"
+    - "inference_uncertainty"
+
+  sla_features:
+    - "target_latency_ms"
+    - "accuracy_threshold"
+    - "priority_level"
+    - "client_tier"
+
+  system_features:
+    - "cpu_utilization"
+    - "gpu_utilization"
+    - "memory_usage"
+    - "network_bandwidth"
+    - "queue_length"
+
+  train_split: 0.8
+  val_split: 0.1
+  test_split: 0.1
+
+environment:
+  serving:
+    host: "0.0.0.0"
+    port: 8080
+    max_batch_size: 64
+    timeout_ms: 5000
+
+  resources:
+    max_gpu_memory_gb: 8
+    max_cpu_cores: 16
+    max_memory_gb: 32
+
+  sla:
+    p95_latency_ms: 100
+    min_accuracy: 0.95
+
+evaluation:
+  target_metrics:
+    p99_latency_reduction_vs_static: 0.35
+    accuracy_degradation_vs_full_model: 0.02
+    throughput_improvement_rps: 2.5
+    sla_violation_rate: 0.01
+
+  eval_frequency: 5
+  eval_batch_size: 64
+  num_eval_episodes: 100
+  statistical_significance_alpha: 0.05
+
+experiment:
+  name: "adaptive_router_research"
+  tags:
+    - "multi-objective"
+    - "reinforcement-learning"
+    - "model-serving"
+
+  mlflow:
+    tracking_uri: "./mlruns"
+    experiment_name: "adaptive_inference_router"
+
+  logging:
+    level: "INFO"
+    log_dir: "./logs"
+    log_format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+system:
+  device: "auto"
+  seed: 42
+  deterministic: true
+  benchmark: true
+
+  checkpoint:
+    save_dir: "./checkpoints"
+    save_frequency: 5
+    keep_best: 3
+
+  monitoring:
+    log_system_metrics: true
+    metrics_frequency_sec: 30
