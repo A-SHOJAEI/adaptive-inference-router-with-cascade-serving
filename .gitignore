@@ -1,0 +1,126 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# MacOS
+.DS_Store
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# Model artifacts
+*.pth
+*.pt
+*.onnx
+*.pkl
+*.joblib
+
+# Logs
+logs/
+*.log
+
+# Checkpoints
+checkpoints/
+models/
+wandb/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Data (exclude large datasets)
+data/raw/
+data/processed/
+*.csv
+*.json
+*.parquet
+
+# Results
+results/
+outputs/
+experiments/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Profiling
+*.prof
+
+# System monitoring
+.monitoring/
+
+# Ray
+ray_results/
+
+# Triton
+triton_model_repository/
+
+# Auto-added by publisher
+# Training artifacts (auto-added by publisher)
+*.h5
+*.bin
+*.safetensors
+mlflow.db
+data/*.arrow
+data/*.parquet
+data/*.h5
+data/*.hdf5
+.venv/
+Thumbs.db
