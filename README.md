@@ -27,11 +27,13 @@ python scripts/evaluate.py --checkpoint checkpoints/best_model.pth --ablation-st
 
 | Metric | Target | Achieved |
 |--------|--------|----------|
-| P99 Latency Reduction vs Static | 35% | Run `python scripts/train.py` to reproduce |
-| Accuracy Degradation vs Full Model | <2% | Run `python scripts/train.py` to reproduce |
-| Throughput Improvement (RPS) | 2.5x | Run `python scripts/train.py` to reproduce |
-| SLA Violation Rate | <1% | Run `python scripts/train.py` to reproduce |
-| Policy Convergence Epochs | <50 | Run `python scripts/train.py` to reproduce |
+| P99 Latency Reduction vs Static | 35% | 67.2% |
+| Accuracy Degradation vs Full Model | <2% | 14.5% |
+| Throughput Improvement (RPS) | 2.5x | 1.02x |
+| SLA Violation Rate | <1% | 58.3% |
+| Policy Convergence Epochs | <50 | 29 |
+
+**Note:** The trained policy converged to a degenerate routing strategy that sends 100% of traffic to the quantized (route 0) variant. This achieves strong latency reduction (67.2%) but at the cost of significant accuracy degradation (14.5%) and high SLA violation rates (58.3%) driven by accuracy threshold breaches. The routing accuracy against optimal decisions is 10.17% (performance MSE: 1628.34). These results indicate the multi-objective reward balancing requires further tuning to avoid mode collapse toward a single route.
 
 ## Architecture
 
