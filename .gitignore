@@ -85,14 +85,13 @@ wandb/
 *.temp
 
 # Data (exclude large datasets)
-data/raw/
-data/processed/
+data/
 *.csv
-*.json
 *.parquet
 
-# Results
-results/
+# Results (include results/results.json)
+results/*
+!results/results.json
 outputs/
 experiments/
 

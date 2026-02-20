@@ -1,0 +1,31 @@
+{
+  "experiment": "adaptive-inference-router-with-cascade-serving",
+  "training": {
+    "epochs": 50,
+    "algorithm": "PPO",
+    "final_avg_reward": 0.2431,
+    "best_avg_reward": 0.2461,
+    "total_loss": 0.0007339,
+    "policy_loss": -1.2147e-06,
+    "value_loss": 0.001617,
+    "entropy": 0.007319,
+    "learning_rate": 8.317e-06
+  },
+  "routing_metrics": {
+    "route_accuracy": 0.1074,
+    "performance_mse": 1653.54,
+    "route_0_usage": 1.0,
+    "route_1_usage": 0.0,
+    "route_2_usage": 0.0,
+    "route_3_usage": 0.0
+  },
+  "final_evaluation": {
+    "route_accuracy": 0.1017,
+    "performance_mse": 1628.34,
+    "route_0_usage": 1.0,
+    "route_1_usage": 0.0,
+    "route_2_usage": 0.0,
+    "route_3_usage": 0.0
+  },
+  "notes": "Policy converged to degenerate routing strategy sending 100% traffic to quantized route (route 0). Multi-objective reward balancing requires further tuning to avoid mode collapse."
+}
